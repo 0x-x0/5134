@@ -1,0 +1,85 @@
+jobs:
+  - name: nginx-mani
+    type: manifest
+    steps:
+      - IN: nginx-image
+      - IN: nginx-params
+      - IN: nginx-opts
+      - IN: triggertest1
+      - TASK: managed
+
+  - name: syncRepo-e1d89
+    type: manifest
+    steps:
+      - IN: myConfigRepo
+
+  - name: simple-mani
+    type: manifest
+    steps:
+      - IN: simple-image
+      - IN: simple-params
+      - IN: simple-opts
+      - IN: betaTrigger
+      - TASK: managed
+
+  - name: ecs-beta
+    type: manifest
+    steps:
+      - IN: betaParams
+      - IN: betaOpts
+      - IN: nginx-mani
+      - IN: betaReplicas
+      - IN: myEcsCluster
+      - TASK: managed
+
+
+  - name: ddc-test
+    type: manifest
+    steps:
+      - IN: simple-mani
+      - IN: betaReplicas
+      - IN: myDdcCluster
+      - IN: betaParams
+      - IN: betaOpts
+      - TASK: managed
+
+  - name: testRelease
+    type: manifest
+    steps:
+      - IN: testVer
+      - IN: simple-mani
+      - TASK: managed
+
+  - name: testRelease2
+    type: manifest
+    steps:
+      - IN: testVer2
+      - IN: simple-mani
+      - TASK: managed
+
+#  - name: dcl-prod
+#    type: dclDeploy
+#    steps:
+#      - IN: ecs-beta
+#        trigger: false
+#      - IN: prodReplicas
+#      - IN: myDclCluster
+#      - IN: prodParams
+#      - IN: prodOpts
+#      - IN: prodTrigger
+#      - TASK: managed
+
+  - name: runSimpleServerCI
+    type: manifest
+    steps:
+      - IN: simpleCIsyncRepo
+      - TASK: managed
+      - OUT: simple-image
+
+
+  - name: prodYmlSync
+    type: manifest
+    steps:
+      - IN: myProdSyncRepo
+      - IN: prodTrigger
+      - TASK: managed

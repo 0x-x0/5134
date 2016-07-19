@@ -1,0 +1,150 @@
+resources:
+  - name: nginx-image
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: nginx-params
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: nginx-opts
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: simple-image
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: simple-params
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: simple-opts
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: myEcsCluster
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: myDdcCluster
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: betaReplicas
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: prodReplicas
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: betaParams
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: prodParams
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: betaOpts
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: prodOpts
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: testVer
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+
+  - name: testVer2
+    type: image
+    integration: "dockerhub"
+    pointer:
+      sourceName: "library/nginx"
+    seed:
+      versionName: stable
+
+  - name: simpleCIsyncRepo
+    type: syncRepo
+    integration: "github"
+    pointer:
+      sourceName: chetantarale/5134
+      branch: master
+
+  - name: myProdSyncRepo
+    type: syncRepo
+    integration: "github"
+    pointer:
+      sourceName: chetantarale/5134
+      branch: master
+
+  - name: myConfigRepo
+    type: syncRepo
+    integration: "github"
+    pointer:
+      sourceName: chetantarale/5134
+      branch: master
