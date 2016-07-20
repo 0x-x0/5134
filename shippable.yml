@@ -1,10 +1,19 @@
-build:
-  pre_ci_boot:
-    image_name:
-    - chetantarale/u14php7pls
-    image_tag:
-    - tip1
-    
-  ci:
-    - echo -e "Hello World!!"
-    - sleep 1m
+language: python
+
+python:
+  - 3.2
+  
+matrix:
+  include:
+    - language: python
+      env: DO=python
+    - language: python
+      env: DO=pascal
+
+install:
+  - if [ "$DO" == "python" ]; then pip install flake8; fi
+  - if [ "$DO" == "pascal" ]; then sudo apt-get install fp-compiler; fi
+
+script:
+  - if [ "$DO" == "python" ]; then echo "PYTHON"; fi
+  - if [ "$DO" == "pascal" ]; then echo "PASCAL"; fi
