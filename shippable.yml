@@ -1,8 +1,30 @@
-language: php
+# language setting  
+language: node_js
 
-php:
-  - 5.6
+# Version number
+node_js:
+  - '0.10'
 
-services:
-  - mongodb
-  - memcached
+env:
+  global:
+    - FOO=FUBU
+
+  matrix:
+    - M1=ONE
+    - M2=TWO
+
+build:
+  ci:
+    - echo "Hello, World!"
+    
+integrations:
+  notifications:
+    - integrationName: slack
+      type: slack
+      recipients: 
+        - "#testIssues"
+        
+      on_start: always
+      on_pull_request: always
+      on_success: always
+      on_failure: always
