@@ -22,7 +22,7 @@ integrations:
     - integrationName: slack
       type: slack
       recipients: 
-        - "#testIssues"
+        - "#testissues"
         
       on_start: always
       on_pull_request: always
