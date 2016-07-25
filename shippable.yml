@@ -25,6 +25,6 @@ integrations:
         - "#testissues"
         
       on_start: always
-      on_pull_request: always
+      #on_pull_request: always
       on_success: change
       on_failure: always
