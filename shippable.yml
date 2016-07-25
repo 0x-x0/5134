@@ -16,6 +16,7 @@ env:
 build:
   ci:
     - echo "Hello, World!"
+    - cat /home/shippable/cexec/build.sh
 
 integrations:
   notifications:
