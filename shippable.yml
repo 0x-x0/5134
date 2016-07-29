@@ -1,14 +1,48 @@
-matrix:
-  include:
-    - language: python
-      env: DO=python
-    - language: python
-      env: DO=pascal
+language: php
 
-install:
-  - if [ "$DO" == "python" ]; then pip install flake8; fi
-  - if [ "$DO" == "pascal" ]; then sudo apt-get install fp-compiler; fi
+php:
+  - 5.6
+  
+env:
+  global:
+    - FOO=FUBU
+    
+build:
+  pre_ci:
+    - echo "This is pre_ci"
+  ci:
+    - echo "Hello, World!"
+    - echo "This is master"
+    - echo "This is ??????"
+    - echo "Hello, World!"
+    - echo "This is !!!!!!"
 
-script:
-  - if [ "$DO" == "python" ]; then echo "PYTHON"; fi
-  - if [ "$DO" == "pascal" ]; then echo "PASCAL"; fi
+integrations:
+  notifications:
+    - integrationName: my_webhook
+      type: webhook
+      payload:
+        - versionName=$BUILD_NUMBER
+      on_success: always
+      on_failure: always
+      on_pull_request: never
+      on_start: never
+
+    - integrationName: slack
+      type: slack
+      recipients: 
+        - "#testissues"
+        
+      on_start: always
+      on_pull_request: always
+      on_success: always
+      on_failure: always
+    
+    - integrationName: my_webhook2
+      type: webhook
+      payload:
+        - versionName=$BUILD_NUMBER
+      on_success: always
+      on_failure: always
+      on_pull_request: never
+      on_start: never
