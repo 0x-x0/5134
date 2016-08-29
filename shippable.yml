@@ -38,11 +38,11 @@ integrations:
       on_success: always
       on_failure: always
     
-    - integrationName: my_webhook2
-      type: webhook
-      payload:
-        - versionName=$BUILD_NUMBER
-      on_success: always
-      on_failure: always
-      on_pull_request: never
-      on_start: never
+    # - integrationName: my_webhook2
+    #   type: webhook
+    #   payload:
+    #     - versionName=$BUILD_NUMBER
+    #   on_success: always
+    #   on_failure: always
+    #   on_pull_request: never
+    #   on_start: never
