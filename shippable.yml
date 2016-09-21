@@ -2,6 +2,12 @@ language: node_js
 
 node_js: 0.12
 
+branches:
+  except:
+    - bar
+  only:
+    - master
+    
 build:
   ci:
     - echo "Hello, World!"
