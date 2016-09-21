@@ -4,9 +4,9 @@ node_js: 0.12
 
 branches:
   except:
-    - bar
+    - foo
   only:
-    - master
+    - bar
     
 build:
   ci:
