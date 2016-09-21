@@ -8,6 +8,8 @@ env:
     - FOO=FUBU
     
 branches:
+  except:
+    - bar
   only:
     - master
     
