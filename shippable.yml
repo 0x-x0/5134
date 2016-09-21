@@ -23,26 +23,26 @@ build:
     - echo "Hello, World!"
     - echo "This is !!!!!!"
 
-integrations:
-  notifications:
-    - integrationName: my_webhook
-      type: webhook
-      payload:
-        - versionName=$BUILD_NUMBER
-      on_success: always
-      on_failure: always
-      on_pull_request: never
-      on_start: never
+# integrations:
+#   notifications:
+#     - integrationName: my_webhook
+#       type: webhook
+#       payload:
+#         - versionName=$BUILD_NUMBER
+#       on_success: always
+#       on_failure: always
+#       on_pull_request: never
+#       on_start: never
 
-    - integrationName: slack
-      type: slack
-      recipients: 
-        - "#testissues"
+#     - integrationName: slack
+#       type: slack
+#       recipients: 
+#         - "#testissues"
         
-      on_start: always
-      on_pull_request: always
-      on_success: always
-      on_failure: always
+#       on_start: always
+#       on_pull_request: always
+#       on_success: always
+#       on_failure: always
     
     # - integrationName: my_webhook2
     #   type: webhook
