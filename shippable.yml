@@ -6,6 +6,8 @@ branches:
   only:
     - master
     - bar
+  except:
+    - bar
 
     
 build:
