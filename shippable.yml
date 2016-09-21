@@ -7,6 +7,12 @@ env:
   global:
     - FOO=FUBU
     
+branches:
+  except:
+    - bar
+  only:
+    - master
+    
 build:
   pre_ci:
     - echo "This is pre_ci"
