@@ -18,6 +18,14 @@ env:
 services:
   - mysql
 
+branches:
+  only:
+    - master
+    - bar
+  except:
+    - bar
+
+    
 build:
   ci:
    - echo $FORTRABBIT_HOST
