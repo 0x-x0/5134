@@ -20,7 +20,6 @@ build:
     - echo "Hello, World!"
     - echo "This is master?"
     - echo "Hello, World!"
-    - echo "This is !!!!!!"
 
 # integrations:
 #   notifications:
