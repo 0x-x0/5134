@@ -29,6 +29,7 @@ build:
    - echo $SYMFONY__DATABASE__NAME
    - echo $SYMFONY__DATABASE__USER
    - echo $SYMFONY__CSS
+   - echo $FOO
 
   on_success:
    - echo $FORTRABBIT_HOST
@@ -41,3 +42,9 @@ build:
    - echo $SYMFONY__DATABASE__USER
    - echo $SYMFONY__CSS
 
+integrations:
+  notifications:
+    - integrationName: email
+      type: email
+      recipients:
+        - chetan@shippable.com
