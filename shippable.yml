@@ -48,3 +48,5 @@ integrations:
       type: email
       recipients:
         - chetan@shippable.com
+      on_success: always
+      on_failure: always
