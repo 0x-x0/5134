@@ -19,7 +19,7 @@ build:
   ci:
     - echo "Hello, World!"
     - echo "This is master??"
-    - echo "$CI"
+    - sleep 1m
 
 integrations:
   notifications:
