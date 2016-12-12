@@ -5,7 +5,7 @@ php:
   
 env:
   global:
-    - FOO=FUBU
+    - FOO=YML
     
 branches:
   except:
