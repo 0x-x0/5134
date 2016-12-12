@@ -19,6 +19,7 @@ build:
   ci:
     - echo "Hello, World!"
     - echo "This is master??"
+    - echo $FOO
     - sleep 1m
 
 #integrations:
