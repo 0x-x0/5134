@@ -6,7 +6,8 @@ php:
 env:
   global:
     - FOO=YML
-    
+  matrix:
+    - BAR=YML
 branches:
   except:
     - bar
@@ -20,6 +21,7 @@ build:
     - echo "Hello, World!"
     - echo "This is master??"
     - echo $FOO
+    - echo $BAR
     - sleep 1m
 
 #integrations:
