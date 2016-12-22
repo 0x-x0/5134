@@ -24,13 +24,13 @@ build:
     - echo $BAR
     - sleep 1m
 
-#integrations:
-#  notifications:
-#    - integrationName: my_webhook
-#      type: webhook
-#      payload:
-#        - versionName=$BUILD_NUMBER
-#      on_success: always
+integrations:
+  notifications:
+    - integrationName: my_webhook
+      type: webhook
+      payload:
+        - versionName=$BUILD_NUMBER
+      on_success: always
 
 #     - integrationName: slack
 #       type: slack
