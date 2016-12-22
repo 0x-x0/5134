@@ -22,7 +22,7 @@ build:
     - echo "This is master??"
     - echo $FOO
     - echo $BAR
-    #- sleep 1m
+    - sleep 1m
 
 integrations:
   notifications:
