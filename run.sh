@@ -4,7 +4,7 @@ export CURR_JOB="buildJob"
 export IMAGE_NAME=runimagein
 export IMAGE_TAG=latest
 export RES_IMAGE="runimagein"
-export RES_REPO="fiveonethreefour"
+export RES_REPO="fiveOnethreefour"
 
 export RES_REPO_UP=$(echo $RES_REPO | awk '{print toupper($0)}')
 export RES_REPO_COMMIT=$(eval echo "$"$RES_REPO_UP"_COMMIT")
