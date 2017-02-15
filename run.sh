@@ -15,6 +15,7 @@ set_context() {
 
 build_tag_push_image() {
   echo "Starting Docker build"
+  ls IN
   cd ./IN/$RES_REPO/gitRepo
   sudo docker build -t="chetantarale/"$IMAGE_NAME:$IMAGE_TAG .
   echo "Completed Docker build"
