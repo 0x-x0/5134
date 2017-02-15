@@ -1,6 +1,0 @@
-jobs:
-  - name: job2
-    type: manifest
-    steps:
-      - PUT: output-image
-      - GET: input-image
