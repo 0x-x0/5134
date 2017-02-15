@@ -8,11 +8,10 @@ export RES_REPO="fiveOnethreefour"
 
 export RES_REPO_UP=$(echo $RES_REPO | awk '{print toupper($0)}')
 export RES_REPO_COMMIT=$(eval echo "$"$RES_REPO_UP"_COMMIT")
-export RES_REPO_CONTENT=$(eval echo "$"$RES_REPO_UP"")
 
 set_context() {
   echo "RES_REPO_COMMIT=$RES_REPO_COMMIT"
-  echo "RES_REPO_CONTENT=$RES_REPO_CONTENT"
+  printenv
 }
 
 build_tag_push_image() {
