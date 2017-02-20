@@ -34,6 +34,7 @@ main() {
   set_context
   build_tag_push_image
   create_image_version
+  ls /tmp
 }
 
 main
