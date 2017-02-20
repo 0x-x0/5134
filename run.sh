@@ -35,6 +35,7 @@ main() {
   build_tag_push_image
   create_image_version
   ls /tmp
+  printenv
 }
 
 main
