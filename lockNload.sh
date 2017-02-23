@@ -10,9 +10,6 @@ export RES_PARAMS_STR=$RES_PARAMS_UP"_PARAMS"
 export OWNER_TOKEN=$(eval echo "$"$RES_PARAMS_STR"_TOKEN")
 
 check_jq() {
-  echo "RES_PARAMS_UP=$RES_PARAMS_UP"
-  echo "RES_PARAMS_STR=$RES_PARAMS_STR"
-  echo "OWNER_TOKEN=$OWNER_TOKEN"
   {
     type jq &> /dev/null && echo "jq is already installed"
   } || {
@@ -26,43 +23,45 @@ get_team_id() {
   echo "Getting team id for $TEAM_NAME"
   echo "----------------------------------------------"
   local url="$GITHUB_API_URL/orgs/$ORG/teams"
-  echo $url
   local teams=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
   TEAMID=$(echo $teams |  jq ".[] | select(.name==\"$TEAM_NAME\") | .id")
-  echo $TEAMID
 }
 
 get_team_repos() {
-  echo "Getting team repositories for $TEAM_NAME"
-  echo "----------------------------------------------"
+  if [ -n $TEAMID || $TEAMID -ne "" || $TEAMID != null ]; then
+    echo "Getting team repositories for $TEAM_NAME"
+    echo "----------------------------------------------"
 
-  local url="$GITHUB_API_URL/teams/$TEAMID/repos"
-  local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
-  TEAM_REPOS=$(echo $res |  jq ".[] | .name")
+    local url="$GITHUB_API_URL/teams/$TEAMID/repos"
+    local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
+    TEAM_REPOS=$(echo $res |  jq ".[] | .name")
+  fi
 }
 
 change_permissions() {
-  echo "Chnaging permissions for $TEAM_NAME"
-  echo "----------------------------------------------"
+  if [ -n $TEAM_REPOS || $TEAM_REPOS -ne "" || $TEAM_REPOS != null ]; then
+    echo "Chnaging permissions for $TEAM_NAME"
+    echo "----------------------------------------------"
 
-  local permission="$1"
-  local data="{\"permission\": \"$permission\"}"
-  for repo in $TEAM_REPOS; do
-    #jq returned array of name has "" around the names hence escaping them here
-    repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
-    url="$GITHUB_API_URL/teams/$TEAMID/repos/$ORG/$repo_name"
+    local permission="$1"
+    local data="{\"permission\": \"$permission\"}"
+    for repo in $TEAM_REPOS; do
+      #jq returned array of name has "" around the names hence escaping them here
+      repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
+      url="$GITHUB_API_URL/teams/$TEAMID/repos/$ORG/$repo_name"
 
-    #check if this repo is managed by this team
-    local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
-    if [ $responseCode -eq 204 ]; then
-      local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNER_TOKEN" $url -d "$data")
-      if [ $res -eq 204 ]; then
-        echo "Permission updated for $repo_name"
-      else
-        echo "Update permissions failed for $repo_name"
+      #check if this repo is managed by this team
+      local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
+      if [ $responseCode -eq 204 ]; then
+        local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNER_TOKEN" $url -d "$data")
+        if [ $res -eq 204 ]; then
+          echo "Permission updated for $repo_name"
+        else
+          echo "Update permissions failed for $repo_name"
+        fi
       fi
-    fi
-  done
+    done
+  fi
 }
 
 main() {
