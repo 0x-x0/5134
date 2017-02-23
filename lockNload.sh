@@ -19,22 +19,24 @@ check_jq() {
 getTeamRepos() {
   local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNERTOKEN" https://api.github.com/teams/$TEAMID/repos)
   TEAMREPOS=$(echo $res |  jq ".[] | .name")
+  echo "$TEAMREPOS"
 }
 
 changePermissions() {
   local permission="$1"
   local data="{\"permission\": \"$permission\"}"
-  for repo in $TEAMREPOS; do
-    repoName=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
-    url="https://api.github.com/teams/$TEAMID/repos/$ORG/$repoName"
-    local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNERTOKEN" $url)
-    if [ $responseCode -eq 204 ]; then
-      local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNERTOKEN" $url -d "$data")
-      if [ $res -eq 204 ]; then
-        echo "Permission updated for $repoName"
-      fi
-    fi
-  done
+  echo $data
+  # for repo in $TEAMREPOS; do
+  #   repoName=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
+  #   url="https://api.github.com/teams/$TEAMID/repos/$ORG/$repoName"
+  #   local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNERTOKEN" $url)
+  #   if [ $responseCode -eq 204 ]; then
+  #     local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNERTOKEN" $url -d "$data")
+  #     if [ $res -eq 204 ]; then
+  #       echo "Permission updated for $repoName"
+  #     fi
+  #   fi
+  # done
 }
 
 main() {
