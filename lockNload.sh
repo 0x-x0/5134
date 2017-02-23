@@ -25,11 +25,10 @@ check_jq() {
 get_team_id() {
   echo "Getting team id for $TEAM_NAME"
   echo "----------------------------------------------"
-  echo $OWNER_TOKEN
   local url="$GITHUB_API_URL/orgs/$ORG/teams"
   echo $url
   local teams=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
-  TEAMID=$(echo $teams |  jq ".[] | select(.name==\"$TEAMNAME\") | .id")
+  TEAMID=$(echo $teams |  jq ".[] | select(.name==\"$TEAM_NAME\") | .id")
   echo $TEAMID
 }
 
