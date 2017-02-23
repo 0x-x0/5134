@@ -1,7 +1,7 @@
 #!/bin/bash -e
 export ORG='shippersOrg'
 export TEAM_ID=''
-export TEAM_NAME='pushPull'
+export TEAM_NAME='ship'
 export GITHUB_API_URL='https://api.github.com'
 
 export RES_PARAMS="team_params"
