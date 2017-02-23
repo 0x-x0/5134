@@ -26,13 +26,14 @@ get_team_id() {
   local url="$GITHUB_API_URL/orgs/$ORG/teams"
   local teams=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
   TEAMID=$(echo $teams |  jq ".[] | select(.name==\"$TEAMNAME\") | .id")
+  echo $TEAMID
 }
 
 get_team_repos() {
   echo "Getting team repositories for $TEAM_NAME"
   echo "----------------------------------------------"
 
-  local url="$https://api.github.com/teams/$TEAMID/repos/teams/$TEAMID/repos"
+  local url="$GITHUB_API_URL/teams/$TEAMID/repos"
   local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
   TEAM_REPOS=$(echo $res |  jq ".[] | .name")
 }
