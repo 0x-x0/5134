@@ -28,7 +28,7 @@ get_team_id() {
 }
 
 get_team_repos() {
-  if [ -n $TEAMID || $TEAMID -ne "" || $TEAMID != null ]; then
+  if [ $TEAMID -ne "" ] || [ $TEAMID != null ]; then
     echo "Getting team repositories for $TEAM_NAME"
     echo "----------------------------------------------"
 
@@ -39,7 +39,7 @@ get_team_repos() {
 }
 
 change_permissions() {
-  if [ -n $TEAM_REPOS || $TEAM_REPOS -ne "" || $TEAM_REPOS != null ]; then
+  if [ $TEAM_REPOS -ne "" ] || [ $TEAM_REPOS != null ]; then
     echo "Chnaging permissions for $TEAM_NAME"
     echo "----------------------------------------------"
 
