@@ -4,12 +4,15 @@ export TEAM_ID=''
 export TEAM_NAME='ship'
 export GITHUB_API_URL='https://api.github.com'
 
-export RES_PARAMS="team_params"
+export RES_PARAMS="teamParams"
 export RES_PARAMS_UP=$(echo $RES_PARAMS | awk '{print toupper($0)}')
 export RES_PARAMS_STR=$RES_PARAMS_UP"_PARAMS"
 export OWNER_TOKEN=$(eval echo "$"$RES_PARAMS_STR"_TOKEN")
 
 check_jq() {
+  echo "RES_PARAMS_UP=$RES_PARAMS_UP"
+  echo "RES_PARAMS_STR=$RES_PARAMS_STR"
+  echo "OWNER_TOKEN=$OWNER_TOKEN"
   {
     type jq &> /dev/null && echo "jq is already installed"
   } || {
