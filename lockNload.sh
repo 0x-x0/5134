@@ -40,7 +40,7 @@ get_team_repos() {
 
 change_permissions() {
   if [ -n "$TEAM_REPOS" ]; then
-    echo "Chnaging permissions for $TEAM_NAME"
+    echo "Changing permissions for $TEAM_NAME"
     echo "----------------------------------------------"
 
     local permission="$1"
@@ -55,9 +55,11 @@ change_permissions() {
       if [ $responseCode -eq 204 ]; then
         local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNER_TOKEN" $url -d "$data")
         if [ $res -eq 204 ]; then
-          echo "Permission updated for $repo_name"
+          echo "Permission updated to $permision for $repo_name"
+          echo "----------------------------------------------"
         else
           echo "Update permissions failed for $repo_name"
+          echo "----------------------------------------------"
         fi
       fi
     done
