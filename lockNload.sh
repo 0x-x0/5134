@@ -39,7 +39,7 @@ get_team_repos() {
 }
 
 change_permissions() {
-  if [ -n $TEAM_REPOS ]; then
+  if [ -n "$TEAM_REPOS" ]; then
     echo "Chnaging permissions for $TEAM_NAME"
     echo "----------------------------------------------"
 
