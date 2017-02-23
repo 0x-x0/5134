@@ -39,8 +39,7 @@ get_team_repos() {
 }
 
 change_permissions() {
-  echo $TEAM_REPOS
-  if [ $TEAM_REPOS != "" ] || [ $TEAM_REPOS != null ]; then
+  if [ -n $TEAM_REPOS ]; then
     echo "Chnaging permissions for $TEAM_NAME"
     echo "----------------------------------------------"
 
