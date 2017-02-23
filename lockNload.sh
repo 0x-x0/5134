@@ -55,10 +55,10 @@ change_permissions() {
       if [ $responseCode -eq 204 ]; then
         local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNER_TOKEN" $url -d "$data")
         if [ $res -eq 204 ]; then
-          echo "Permission updated to $permision for $repo_name"
+          echo "Permission updated to $permission for $repo_name"
           echo "----------------------------------------------"
         else
-          echo "Update permissions failed for $repo_name"
+          echo "Update $permission permission failed for $repo_name"
           echo "----------------------------------------------"
         fi
       fi
