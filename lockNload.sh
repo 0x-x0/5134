@@ -1,7 +1,7 @@
 #!/bin/bash -e
 export TEAMID=$(echo $TEAMPARAMS_PARAMS_TMID | awk '{print toupper($0)}')
 export OWNERTOKEN=$(eval echo "$TEAMPARAMS_PARAMS_TOKEN")
-
+export ORG='shippersOrg'
 check_jq() {
   {
     type jq &> /dev/null && echo "jq is already installed"
