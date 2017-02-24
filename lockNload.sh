@@ -72,6 +72,8 @@ create_version() {
   echo "----------------------------------------------"
   printenv
 
+  echo "----------------------------------------------"
+  echo $REPOS
   for rep in $REPOS; do
     echo "----------------------------------------------"
     echo "Creating a state file for" $rep
