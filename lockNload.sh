@@ -9,6 +9,8 @@ export RES_PARAMS_UP=$(echo $RES_PARAMS | awk '{print toupper($0)}')
 export RES_PARAMS_STR=$RES_PARAMS_UP"_PARAMS"
 export OWNER_TOKEN=$(eval echo "$"$RES_PARAMS_STR"_TOKEN")
 
+export REPOS="apiRepo wwwRepo"
+
 check_jq() {
   {
     type jq &> /dev/null && echo "jq is already installed"
@@ -66,11 +68,24 @@ change_permissions() {
   fi
 }
 
+create_version() {
+  echo "----------------------------------------------"
+  printenv
+  echo "----------------------------------------------"
+  # for rep in $REPOS; do
+  # echo "Creating a state file for" $rep
+  # echo REPO_COMMIT_SHA=$RES_REPO_COMMIT >> /build/state/$rep.env
+  # echo USER=$USER >> /build/state/$RES_IMAGE.env
+  # echo "Completed creating a state file for" $RES_IMAGE
+  # done
+}
+
 main() {
   check_jq
   get_team_id
   get_team_repos
   change_permissions "$@"
+  create_version
 }
 
 main "$@"
