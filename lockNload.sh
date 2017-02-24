@@ -71,13 +71,17 @@ change_permissions() {
 create_version() {
   echo "----------------------------------------------"
   printenv
-  echo "----------------------------------------------"
-  # for rep in $REPOS; do
-  # echo "Creating a state file for" $rep
-  # echo REPO_COMMIT_SHA=$RES_REPO_COMMIT >> /build/state/$rep.env
-  # echo USER=$USER >> /build/state/$RES_IMAGE.env
-  # echo "Completed creating a state file for" $RES_IMAGE
-  # done
+
+  for rep in $REPOS; do
+    echo "----------------------------------------------"
+    echo "Creating a state file for" $rep
+    RES_REPO_UP=$(echo $rep | awk '{print toupper($0)}')
+    RES_REPO_COMMIT=$(eval echo "$"$RES_REPO_UP"_COMMIT")
+
+    echo REPO_COMMIT_SHA=$RES_REPO_COMMIT >> /build/state/$rep.env
+    echo "Completed creating a state file for" $RES_IMAGE
+    echo "----------------------------------------------"
+  done
 }
 
 main() {
