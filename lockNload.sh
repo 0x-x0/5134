@@ -83,6 +83,7 @@ create_version() {
     echo name=$rep >> /build/state/$rep.env
     echo "Completed creating a state file for" $rep
     echo "----------------------------------------------"
+    cat /build/state/$rep.env
   done
 }
 
