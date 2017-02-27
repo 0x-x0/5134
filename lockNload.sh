@@ -35,7 +35,7 @@ get_team_repos() {
     echo "Getting team repositories for $TEAM_NAME"
     echo "----------------------------------------------"
 
-    local url="$GITHUB_API_URL/teams/$TEAMID/repos"
+    local url="$GITHUB_API_URL/teams/$TEAM_ID/repos"
     local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
     if [ $? -eq 0 ]; then
       TEAM_REPOS=$(echo $res |  jq ".[] | .name")
@@ -53,7 +53,7 @@ change_permissions() {
     for repo in $TEAM_REPOS; do
       #jq returned array of name has "" around the names hence escaping them here
       repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
-      url="$GITHUB_API_URL/teams/$TEAMID/repos/$ORG_NAME/$repo_name"
+      url="$GITHUB_API_URL/teams/$TEAM_ID/repos/$ORG_NAME/$repo_name"
 
       #check if this repo is managed by the team
       local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
