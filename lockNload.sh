@@ -31,7 +31,7 @@ check_jq() {
 }
 
 get_team_repos() {
-  if [ $TEAMID != "" ] || [ $TEAMID != null ]; then
+  if [ $TEAM_ID != "" ] || [ $TEAM_ID != null ]; then
     echo "Getting team repositories for $TEAM_NAME"
     echo "----------------------------------------------"
 
