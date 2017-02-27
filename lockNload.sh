@@ -17,7 +17,7 @@ set_context() {
   echo "RES_PARAMS_UP=$RES_PARAMS_UP"
   echo "RES_PARAMS_STR=$RES_PARAMS_STR"
   echo "GITHUB_TOKEN=$GITHUB_TOKEN"
-  echo "GITHUB_API_URL=$GITHUB_API_URL"
+  echo "TEAM_ID=$TEAM_ID"
 }
 
 check_jq() {
