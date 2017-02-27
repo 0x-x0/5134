@@ -50,13 +50,15 @@ change_permissions() {
 
     local permission="$1"
     local data="{\"permission\": \"$permission\"}"
+    echo "data----->"$data
     for repo in $TEAM_REPOS; do
       #jq returned array of name has "" around the names hence escaping them here
       repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
       url="$GITHUB_API_URL/teams/$TEAM_ID/repos/$ORG_NAME/$repo_name"
-
+      echo "url----->"$url
       #check if this repo is managed by the team
       local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
+      echo $responseCode
       if [ $responseCode -eq 204 ]; then
         local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $GITHUB_TOKEN" $url -d "$data")
         if [ $res -eq 204 ]; then
