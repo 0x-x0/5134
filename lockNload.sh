@@ -31,17 +31,20 @@ get_team_repos() {
   if [ $TEAM_ID != "" ] || [ $TEAM_ID != null ]; then
     echo "Getting team repositories for $TEAM_NAME"
     echo "----------------------------------------------"
-
-    local url="$GITHUB_API_URL/teams/$TEAM_ID/repos"
-    local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
-    if [ $? -eq 0 ]; then
-      TEAM_REPOS=$(echo $res |  jq -r ".[] | .name")
+    pageNo=1
+    while [1], do
+      local url="$GITHUB_API_URL/teams/$TEAM_ID/repos?page=$pageNo"
+      local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
       length=$(echo $res |  jq '. | length')
-      echo "Found $length reposotries for $TEAM_NAME team"
-      echo "----------------------------------------------"
-      echo "$TEAM_REPOS"
-      echo "----------------------------------------------"
-    fi
+      if [ $? -eq 0 ]; then
+        TEAM_REPOS+=$(echo $res |  jq -r ".[] | .name")
+        echo "Found $length reposotries for $TEAM_NAME team"
+        echo "----------------------------------------------"
+        echo "$TEAM_REPOS"
+        echo "----------------------------------------------"
+      fi
+      pageNo=$((pageNo+1))
+    done
   fi
 }
 
