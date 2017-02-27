@@ -39,7 +39,7 @@ get_team_repos() {
       length=$(echo $res |  jq '. | length')
       echo "Found $length reposotries for $TEAM_NAME team"
       echo "----------------------------------------------"
-      echo "TEAM_REPOS"
+      echo "$TEAM_REPOS"
       echo "----------------------------------------------"
     fi
   fi
