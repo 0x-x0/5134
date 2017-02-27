@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-export RES_PARAMS="team_params"
+export RES_PARAMS="teamParams"
 
 export RES_PARAMS_UP=$(echo $RES_PARAMS | awk '{print toupper($0)}')
 export RES_PARAMS_STR=$RES_PARAMS_UP"_PARAMS"
