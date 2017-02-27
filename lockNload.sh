@@ -37,7 +37,6 @@ get_team_repos() {
     if [ $? -eq 0 ]; then
       TEAM_REPOS=$(echo $res |  jq ".[] | .name")
       length=$(echo $res |  jq ".[] | length)
-      echo "Found $length repositories for $TEAM_NAME"
     fi
   fi
 }
