@@ -80,8 +80,8 @@ create_version() {
     RES_REPO_UP=$(echo $rep | awk '{print toupper($0)}')
     RES_REPO_COMMIT=$(eval echo "$"$RES_REPO_UP"_COMMIT")
 
-    echo REPO_COMMIT_SHA=$RES_REPO_COMMIT >> /build/state/$rep.env
-    echo "Completed creating a state file for" $RES_IMAGE
+    echo name=$rep >> /build/state/$rep.env
+    echo "Completed creating a state file for" $rep
     echo "----------------------------------------------"
   done
 }
