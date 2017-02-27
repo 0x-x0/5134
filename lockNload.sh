@@ -36,7 +36,8 @@ get_team_repos() {
     local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
     if [ $? -eq 0 ]; then
       TEAM_REPOS=$(echo $res |  jq ".[] | .name")
-      echo "Found ${#TEAM_REPOS[@]} repositories for $TEAM_NAME"
+      length=$(echo $res |  jq ".[] | length)
+      echo "Found $length repositories for $TEAM_NAME"
     fi
   fi
 }
