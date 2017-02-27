@@ -1,15 +1,24 @@
 #!/bin/bash -e
-export ORG='shippersOrg'
-export TEAM_ID=''
-export TEAM_NAME='ship'
-export GITHUB_API_URL='https://api.github.com'
 
-export RES_PARAMS="teamParams"
+export RES_PARAMS="team_params"
+
 export RES_PARAMS_UP=$(echo $RES_PARAMS | awk '{print toupper($0)}')
 export RES_PARAMS_STR=$RES_PARAMS_UP"_PARAMS"
-export OWNER_TOKEN=$(eval echo "$"$RES_PARAMS_STR"_TOKEN")
+export GITHUB_TOKEN=$(eval echo "$"$RES_PARAMS_STR"_GITHUB_TOKEN")
+export ORG_NAME=$(eval echo "$"$RES_PARAMS_STR"_ORG_NAME")
+export TEAM_ID=$(eval echo "$"$RES_PARAMS_STR"_TEAM_ID")
+export TEAM_NAME=$(eval echo "$"$RES_PARAMS_STR"_TEAM_NAME")
+export GITHUB_API_URL=$(eval echo "$"$RES_PARAMS_STR"_GITHUB_API_URL")
 
-export REPOS="apiRepo wwwRepo"
+set_context() {
+  echo "ORG_NAME=$ORG_NAME"
+  echo "TEAM_NAME=$TEAM_NAME"
+  echo "GITHUB_API_URL=$GITHUB_API_URL"
+  echo "RES_PARAMS_UP=$RES_PARAMS_UP"
+  echo "RES_PARAMS_STR=$RES_PARAMS_STR"
+  echo "GITHUB_TOKEN=$GITHUB_TOKEN"
+  echo "GITHUB_API_URL=$GITHUB_API_URL"
+}
 
 check_jq() {
   {
@@ -21,22 +30,16 @@ check_jq() {
   }
 }
 
-get_team_id() {
-  echo "Getting team id for $TEAM_NAME"
-  echo "----------------------------------------------"
-  local url="$GITHUB_API_URL/orgs/$ORG/teams"
-  local teams=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
-  TEAMID=$(echo $teams |  jq ".[] | select(.name==\"$TEAM_NAME\") | .id")
-}
-
 get_team_repos() {
   if [ $TEAMID != "" ] || [ $TEAMID != null ]; then
     echo "Getting team repositories for $TEAM_NAME"
     echo "----------------------------------------------"
 
     local url="$GITHUB_API_URL/teams/$TEAMID/repos"
-    local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
-    TEAM_REPOS=$(echo $res |  jq ".[] | .name")
+    local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
+    if [ $? -eq 0 ]; then
+      TEAM_REPOS=$(echo $res |  jq ".[] | .name")
+    fi
   fi
 }
 
@@ -50,12 +53,12 @@ change_permissions() {
     for repo in $TEAM_REPOS; do
       #jq returned array of name has "" around the names hence escaping them here
       repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
-      url="$GITHUB_API_URL/teams/$TEAMID/repos/$ORG/$repo_name"
+      url="$GITHUB_API_URL/teams/$TEAMID/repos/$ORG_NAME/$repo_name"
 
-      #check if this repo is managed by this team
-      local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $OWNER_TOKEN" $url)
+      #check if this repo is managed by the team
+      local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
       if [ $responseCode -eq 204 ]; then
-        local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $OWNER_TOKEN" $url -d "$data")
+        local res=$(curl --write-out %{http_code} --silent -X PUT -H "Content-Type: application/json" -H "Accept: application/vnd.github.v3.repository+json" -H "Authorization: token $GITHUB_TOKEN" $url -d "$data")
         if [ $res -eq 204 ]; then
           echo "Permission updated to $permission for $repo_name"
           echo "----------------------------------------------"
@@ -68,31 +71,11 @@ change_permissions() {
   fi
 }
 
-create_version() {
-  echo "----------------------------------------------"
-  printenv
-
-  echo "----------------------------------------------"
-  echo $REPOS
-  for rep in $REPOS; do
-    echo "----------------------------------------------"
-    echo "Creating a state file for" $rep
-    RES_REPO_UP=$(echo $rep | awk '{print toupper($0)}')
-    RES_REPO_COMMIT=$(eval echo "$"$RES_REPO_UP"_COMMIT")
-
-    echo name=$rep >> /build/state/$rep.env
-    echo "Completed creating a state file for" $rep
-    echo "----------------------------------------------"
-    cat /build/state/$rep.env
-  done
-}
-
 main() {
+  set_context
   check_jq
-  get_team_id
   get_team_repos
   change_permissions "$@"
-  create_version
 }
 
 main "$@"
