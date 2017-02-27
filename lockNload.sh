@@ -35,7 +35,7 @@ get_team_repos() {
     local url="$GITHUB_API_URL/teams/$TEAM_ID/repos"
     local res=$(curl --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
     if [ $? -eq 0 ]; then
-      TEAM_REPOS=$(echo $res |  jq "[ .[] | .name ]")
+      TEAM_REPOS=$(echo $res |  jq -r ".[] | .name")
       length=$(echo $res |  jq '. | length')
       echo "Found $length reposotries for $TEAM_NAME team"
       echo "----------------------------------------------"
@@ -52,10 +52,9 @@ change_permissions() {
 
     local permission="$1"
     local data="{\"permission\": \"$permission\"}"
-    for repo in $TEAM_REPOS; do
-      #jq returned array of name has "" around the names hence escaping them here
-      repo_name=$(echo "$repo" | sed -e 's/^"//' -e 's/"$//')
+    for repo_name in $TEAM_REPOS; do
       url="$GITHUB_API_URL/teams/$TEAM_ID/repos/$ORG_NAME/$repo_name"
+      echo $url
       #check if this repo is managed by the team
       local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
       if [ $responseCode -eq 204 ]; then
