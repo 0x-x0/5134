@@ -9,6 +9,7 @@ export ORG_NAME=$(eval echo "$"$RES_PARAMS_STR"_ORG_NAME")
 export TEAM_ID=$(eval echo "$"$RES_PARAMS_STR"_TEAM_ID")
 export TEAM_NAME=$(eval echo "$"$RES_PARAMS_STR"_TEAM_NAME")
 export GITHUB_API_URL=$(eval echo "$"$RES_PARAMS_STR"_GITHUB_API_URL")
+export array="echo b"
 
 set_context() {
   echo "ORG_NAME=$ORG_NAME"
@@ -53,6 +54,12 @@ change_permissions() {
     local permission="$1"
     local data="{\"permission\": \"$permission\"}"
     for repo_name in $TEAM_REPOS; do
+      if [[ " ${array[@]} " =~ '$repo_name' ]]; then
+          # whatever you want to do when arr contains value
+          echo "foo"
+          continue
+      fi
+
       url="$GITHUB_API_URL/teams/$TEAM_ID/repos/$ORG_NAME/$repo_name"
       #check if this repo is managed by the team
       local responseCode=$(curl --write-out %{http_code} --silent -X GET -H "Accept: application/json" -H "Authorization: token $GITHUB_TOKEN" $url)
