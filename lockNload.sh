@@ -54,7 +54,7 @@ change_permissions() {
     local permission="$1"
     local data="{\"permission\": \"$permission\"}"
     for repo_name in $TEAM_REPOS; do
-      if [[ " ${array[@]} " =~ '$repo_name' ]]; then
+      if [[ " ${array[@]} " =~ "$repo_name" ]]; then
           # whatever you want to do when arr contains value
           echo "foo"
           continue
